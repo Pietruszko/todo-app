@@ -1,2 +1,14 @@
 #Ignore virtual environment
 /venv/
+
+#Ignore .env file
+.env
+
+#Ignore .pyc files
+*.pyc
+
+#Ignore cache files
+__pycache__
+
+#Ignore migrations
+*/migrations/
