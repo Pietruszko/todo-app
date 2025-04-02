@@ -6,6 +6,9 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ['id', 'title', 'completed']
+        extra_kwargs = {
+            'title': {'required': False}
+        }
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
