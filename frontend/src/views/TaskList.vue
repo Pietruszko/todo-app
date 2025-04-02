@@ -38,13 +38,16 @@
                 <button @click="deleteTask(task.id)">Delete</button>
             </li>
         </ul>
+        <button @click="handleLogout" class="logout-btn">Logout</button>
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from '@/auth.js'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const loading = ref(true)
 const tasks = ref([])
 const errorMessage = ref('')
@@ -52,6 +55,16 @@ const newTask = ref({ title: '' })
 const editedTask = ref(null)
 const vFocus = {
   mounted: (el) => el.focus()
+}
+
+const handleLogout = () => {
+  try {
+    localStorage.removeItem('token')
+    router.push('/login')
+    tasks.value = []
+  } catch (error) {
+    console.error('Logout failed:', error)
+  }
 }
 
 function startEditing(task) {
@@ -172,5 +185,14 @@ li {
 }
 .task-title, .title-edit {
   width: 0;
+}
+.logout-btn {
+  margin-top: 1rem;
+  background: #ff4444;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 </style>

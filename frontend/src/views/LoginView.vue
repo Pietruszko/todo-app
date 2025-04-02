@@ -10,6 +10,7 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { ref } from 'vue'
 import api from '@/auth.js'
 import { useRouter } from 'vue-router'
@@ -18,6 +19,12 @@ const router = useRouter()
 const form = ref({
     username: '',
     password: ''
+})
+
+onMounted(() => {
+    if (localStorage.getItem('token')) {
+    router.push('/tasks')
+    }
 })
 
 const handleLogin = async () => {

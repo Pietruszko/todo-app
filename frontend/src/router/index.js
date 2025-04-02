@@ -13,13 +13,13 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView,
-    meta: { requiresAuth: false }
+    meta: { forGuestsOnly: true }
   },
   {
     path: '/register',
     name: 'register',
     component: RegisterView,
-    meta: { requiresAuth: false }
+    meta: { forGuestsOnly: true  }
   },
   {
     path: '/tasks',
@@ -37,11 +37,16 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem('token')
 
-  if (to.meta.requiresAuth !== false && !isAuthenticated) {
-    next('/login')
-  } else {
-    next()
+  if (isAuthenticated && to.meta.forGuestsOnly) {
+    next('/tasks')
+    return
   }
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next('/login')
+    return
+  }
+  next()
 })
 
 export default router

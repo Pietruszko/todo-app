@@ -11,6 +11,7 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { ref } from 'vue'
 import api from '@/auth.js'
 import { useRouter } from 'vue-router'
@@ -20,6 +21,12 @@ const form = ref({
     username: '',
     password: '',
     confirmPassword: '',
+})
+
+onMounted(() => {
+  if (localStorage.getItem('token')) {
+    router.push('/tasks') // Immediate redirect if logged in
+  }
 })
 
 const handleRegister = async () => {
