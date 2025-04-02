@@ -7,12 +7,19 @@ const api = axios.create({
     }
 })
 
+const SKIP_AUTH_URLS = ['register', 'login']
+
 api.interceptors.request.use(config => {
-    const token = localStorage.getItem('token')
-    if (token) {
+    if (SKIP_AUTH_URLS.some(url => config.url.includes(url))) {
+        return config
+      }
+    
+      // Add token for all other requests
+      const token = localStorage.getItem('token')
+      if (token) {
         config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
+      }
+      return config
 })
 
 export default api

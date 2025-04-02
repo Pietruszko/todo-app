@@ -1,10 +1,11 @@
 <template>
     <div class="form-container">
-        <h1>Login</h1>
-        <form @submit.prevent="handleLogin" class="auth-form">
+        <h1>Register</h1>
+        <form @submit.prevent="handleRegister" class="auth-form">
             <input v-model="form.username" placeholder="Username" required>
             <input v-model="form.password" type="password" placeholder="Password" required>
-            <button type="submit">Login</button>
+            <input v-model="form.confirmPassword" type="password" placeholder="Confirm Password" required>
+            <button type="submit">Register</button>
         </form>
     </div>
 </template>
@@ -17,16 +18,24 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const form = ref({
     username: '',
-    password: ''
+    password: '',
+    confirmPassword: '',
 })
 
-const handleLogin = async () => {
+const handleRegister = async () => {
+    if (form.value.password !== form.value.confirmPassword) {
+        alert('Passwords do not match!')
+        return
+    }
+
     try {
-        const response = await api.post('login/', form.value)
-        localStorage.setItem('token', response.data.access)
-        router.push('/tasks')
+        const response = await api.post('register/', {
+            username: form.value.username,
+            password: form.value.password,
+        })
+        router.push('/login')
     } catch (error) {
-        alert('Login failed!')
+        alert('Registering failed!')
     }
 }
 </script>
