@@ -40,10 +40,10 @@ Explore the deployed version:
   - Applied `IsAuthenticated` for task endpoints.  
   - Added owner validation in `TaskViewSet` to restrict edits/deletes to task owners.  
 - **Testing**:  
-  - Wrote unit tests for:  
+  - Wrote django unit tests for:  
     - Task ownership enforcement (e.g., user A cannot delete user B’s tasks).  
     - Authentication requirements (blocked access without tokens).  
-  - *Identified area for growth*: Testing token expiration/refresh logic.  
+    - CRUD operations (e.g., creating, updating, deleting tasks).   
 
 **Frontend (Vue 3 + Pinia)**  
 - **State Management**:  
@@ -66,4 +66,4 @@ Explore the deployed version:
 | -------------- | --------------------------------------- |
 | Login Page     | ![Login](screenshots/login.png)         |
 | Registration   | ![Register](screenshots/register.png)   |
-| Task Dashboard | ![Tasks](screenshots/tasks.png)         |
+| Tasks List     | ![Tasks](screenshots/tasks.png)         |
