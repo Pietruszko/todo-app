@@ -156,6 +156,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8080",
     "http://frontend:80",  # Frontend
     "https://todo-app-5v21.onrender.com/",  # Render
+    "https://todo-app-frontend-33ym.onrender.com", # Render frontend
 ]
 
 CORS_ALLOW_CREDENTIALS = True
