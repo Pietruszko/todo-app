@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,9 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,backend,127.0.0.1',
+                       cast=lambda v: [s.strip() for s in v.split(',')]
+)
 
 
 # Application definition
@@ -96,10 +99,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST', default = 'localhost'),
+        'NAME': config('DB_NAME', default=os.getenv('POSTGRES_DB')),
+        'USER': config('DB_USER', default=os.getenv('POSTGRES_USER')),
+        'PASSWORD': config('DB_PASSWORD', default=os.getenv('POSTGRES_PASSWORD')),
+        'HOST': config('DB_HOST', default='db'),
+        'PORT': config('DB_PORT', default='5432'),
     }
 }
 
@@ -147,8 +151,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
+    "http://localhost:5173",  # Dev
+    "http://localhost:8080",  # Production
+    "http://127.0.0.1:8080",
+    "http://frontend:80",  # Frontend
 ]
 
 CORS_ALLOW_CREDENTIALS = True
