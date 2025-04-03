@@ -6,6 +6,7 @@
             <input v-model="form.password" type="password" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
+        <button @click="handleRegisterRedirect" class="register-redirect-btn">New? Register here</button>
     </div>
 </template>
 
@@ -26,6 +27,14 @@ onMounted(() => {
     router.push('/tasks')
     }
 })
+
+const handleRegisterRedirect = () => {
+  try {
+    router.push('/register')
+  } catch (error) {
+    console.error('Operation failed:', error)
+  }
+}
 
 const handleLogin = async () => {
     try {
@@ -59,6 +68,15 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+.register-redirect-btn {
+  margin-top: 0.5rem;
+  background: #42b983;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 </style>
 
