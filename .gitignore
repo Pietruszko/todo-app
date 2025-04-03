@@ -3,6 +3,7 @@
 
 #Ignore .env file
 .env
+docker.env
 
 #Ignore .pyc files
 *.pyc
