@@ -10,7 +10,3 @@ docker.env
 
 #Ignore cache files
 __pycache__
-
-#Ignore migrations
-*migrations/
-backend/todos/migrations/
